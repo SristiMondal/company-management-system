@@ -44,3 +44,21 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## first phase
+
+1. add loader ~ done
+2. github
+3. deploy
+4. unit testing
+5. Redux
+6. authentication
+
+## second phase
+
+7. backend with node
+8. enhancement
+
+## third phase
+
+9. docker 10. jenkins

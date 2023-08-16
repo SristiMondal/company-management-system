@@ -1,0 +1,11 @@
+.footer {
+  height: 200px;
+  width: 100%;
+  background-color: black;
+}
+
+.copyRight {
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
