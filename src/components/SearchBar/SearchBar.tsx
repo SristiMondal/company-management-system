@@ -21,6 +21,7 @@ const SearchBar = (props: any) => {
               position="end"
               onClick={handleSearch}
               sx={{ cursor: "pointer" }}
+              data-testid="search-icon"
             >
               <Search />
             </InputAdornment>
