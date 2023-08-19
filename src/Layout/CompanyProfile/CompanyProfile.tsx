@@ -27,10 +27,10 @@ const CompanyProfile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const companies = await fetchCompanyData();
+      const companies:any = await fetchCompanyData();
       if (companies) {
         setLoader(false);
-        let filteredData = companies.filter((row: any) => row.id == id);
+        let filteredData = companies.filter((row: any) => row.id == 1);
         setProfileData(filteredData[0]);
       }
     };
@@ -50,6 +50,7 @@ const CompanyProfile = () => {
           onClick={() => {
             console.log("Hi");
           }}
+          data-testid="loading-spinner"
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -57,7 +58,6 @@ const CompanyProfile = () => {
         <Box className="outerBox">
           <Box className="innerBox">
             <Box className="imageOuterBox">
-              {/* <img src={profileData.image} alt="profile" className="image" /> */}
               <img
                 src={"https://picsum.photos/200/300"}
                 alt="profile"
@@ -97,8 +97,7 @@ const CompanyProfile = () => {
                 <Typography variant="body1" color="initial" sx={title}>
                   Contact:
                 </Typography>
-                <Typography variant="body1" color="initial" sx={description}>
-                  {" "}
+                <Typography variant="body1" color="initial" sx={description} data-testid="test-phone">
                   {profileData?.phone ?? ""}
                 </Typography>
               </Box>
