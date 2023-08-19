@@ -56,6 +56,7 @@ const Dashboard = () => {
           onClick={() => {
             console.log("Hi");
           }}
+          data-testid="loading-spinner-dashboard"
         >
           <CircularProgress color="inherit" />
         </Backdrop>
@@ -67,6 +68,7 @@ const Dashboard = () => {
             setText={setSearchedText}
             handleSearch={handleSearch}
             textBoxStyle={textBoxStyle}
+            name="search"
           />
           <StrippedTable rows={rows} setRows={setRows} />
         </Box>
