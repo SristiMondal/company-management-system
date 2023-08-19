@@ -3,5 +3,7 @@
   border: 1px solid;
 }
 
-.tablehead {
+.actions-box{
+  display: flex;
+  gap:8px;
 }

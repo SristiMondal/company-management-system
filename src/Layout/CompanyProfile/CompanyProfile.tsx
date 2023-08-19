@@ -36,8 +36,7 @@ const CompanyProfile = () => {
     };
     fetchData();
   }, []);
-  console.log(profileData);
-  console.log(id);
+  
   return (
     <Box>
       {loader ? (

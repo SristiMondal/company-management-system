@@ -21,6 +21,8 @@ import {
   FirstPage,
   KeyboardArrowRight,
   KeyboardArrowLeft,
+  Edit,
+  Delete,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
@@ -108,7 +110,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function StrippedTable(props: any) {
-  const { rows, setRows } = props;
+  const { rows, setEditMode, setRowId, setLoader, setOpenDeleteModal } = props;
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [page, setPage] = useState<number>(0);
   const navigate = useNavigate();
@@ -122,6 +124,19 @@ export default function StrippedTable(props: any) {
     setPage(0);
   };
 
+  const handleEdit = (event: React.MouseEvent, id: number) => {
+    event.stopPropagation();
+    setRowId(id);
+    setEditMode(true);
+    setLoader(true);
+  };
+
+  const handleDelete = (event: React.MouseEvent, id: number) => {
+    event.stopPropagation();
+    setRowId(id);
+    setOpenDeleteModal(true);
+  };
+
   return (
     <TableContainer component={Paper} sx={{ marginTop: "25px" }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -132,6 +147,7 @@ export default function StrippedTable(props: any) {
             <StyledTableCell align="left">Contact</StyledTableCell>
             <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Vat</StyledTableCell>
+            <StyledTableCell align="left">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -152,6 +168,26 @@ export default function StrippedTable(props: any) {
                 <StyledTableCell align="left">{phone}</StyledTableCell>
                 <StyledTableCell align="left">{email}</StyledTableCell>
                 <StyledTableCell align="left">{vat}</StyledTableCell>
+                <StyledTableCell align="left">
+                  <Box className="actions-box">
+                    <IconButton
+                      aria-label="edit-icon"
+                      onClick={(event: React.MouseEvent) =>
+                        handleEdit(event, id)
+                      }
+                    >
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      aria-label="delete-icon"
+                      onClick={(event: React.MouseEvent) =>
+                        handleDelete(event, id)
+                      }
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Box>
+                </StyledTableCell>
               </StyledTableRow>
             );
           })}

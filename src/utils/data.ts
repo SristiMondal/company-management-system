@@ -9,7 +9,6 @@ export const fetchCompanyData = async () => {
     // }
 
     const responseData = await response.json();
-    console.log( responseData?.data,"today")
     const companies = responseData?.data ?? [];
     return companies;
   } catch (error) {
