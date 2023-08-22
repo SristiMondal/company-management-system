@@ -6,6 +6,13 @@ import "./Dashboard.css";
 import { fetchCompanyData } from "../../utils/data";
 import AddRowModal from "../../components/AddRowModal/AddRowModal";
 import DeleteRowModal from "../../components/DeleteRowModal/DeleteRowModal";
+import counterSlice, {
+  decreamentCount,
+  increamentCount,
+} from "../../redux/counterSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { getCompanyList } from "../../redux/Dashboard/dashboardSlice";
 
 const textBoxStyle = {
   width: "300px",
@@ -31,21 +38,26 @@ const Dashboard = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [rowId, setRowId] = useState<number>(-1);
+  const count = useSelector((state: RootState) => state.counter.count);
+  const companies = useSelector(
+    (state: RootState) => state.company.companyList
+  );
+  const dispatch = useDispatch();
 
   const handleSearch = async () => {
-    const companies = await fetchCompanyData();
-    if (companies) {
+    const companiesList = await fetchCompanyData();
+    if (companiesList) {
       if (searchedText === "") {
-        setRows(companies);
+        dispatch(getCompanyList(companiesList));
       }
-      let filteredRows = companies.filter(
+      let filteredRows = companiesList.filter(
         (row: any) =>
           row.name.toLowerCase().includes(searchedText.toLowerCase()) ||
           row.email.toLowerCase().includes(searchedText.toLowerCase()) ||
           row.phone.toLowerCase().includes(searchedText.toLowerCase()) ||
           row.vat.toLowerCase().includes(searchedText.toLowerCase())
       );
-      setRows(filteredRows);
+      dispatch(getCompanyList(filteredRows));
     }
   };
 
@@ -73,15 +85,19 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const companies = await fetchCompanyData();
-      if (companies) {
-        setRows(companies);
+      const companiesList = await fetchCompanyData();
+      if (companiesList) {
+        dispatch(getCompanyList(companiesList));
         setLoader(false);
       }
     };
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setRows(companies ?? []);
+  }, [companies]);
+  console.log(count, "count");
   return (
     <Box>
       {loader ? (
@@ -101,13 +117,33 @@ const Dashboard = () => {
       ) : (
         <Box className="dashboard">
           <Box className="dashboard-header">
-            <Button
-              variant="contained"
-              onClick={handleAddButton}
-              sx={addButton}
-            >
-              Add Rows
-            </Button>
+            <Box className="main-button-div">
+              <Button
+                variant="contained"
+                onClick={handleAddButton}
+                sx={addButton}
+              >
+                Add Rows
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  dispatch(increamentCount(count));
+                }}
+                sx={addButton}
+              >
+                {`++ ${count}`}
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  dispatch(decreamentCount(count));
+                }}
+                sx={addButton}
+              >
+                {`-- ${count}`}
+              </Button>
+            </Box>
             <SearchBar
               text={searchedText}
               setText={setSearchedText}
