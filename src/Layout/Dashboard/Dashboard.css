@@ -6,3 +6,7 @@
   justify-content: space-between;
 }
 
+.main-button-div{
+  display:flex;
+  gap:8px;
+}

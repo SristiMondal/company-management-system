@@ -7,10 +7,11 @@ export const fetchCompanyData = async () => {
     // if (!response.ok) {
     //   throw new Error(`Request failed with status ${response.status}`);
     // }
-
-    const responseData = await response.json();
-    const companies = responseData?.data ?? [];
-    return companies;
+    if (response) {
+      const responseData = await response.json();
+      const companies = responseData?.data ?? [];
+      return companies;
+    }
   } catch (error) {
     console.error("Error fetching company data:", error);
     return [];

@@ -162,7 +162,7 @@ export default function StrippedTable(props: any) {
                 onClick={() => navigate(`/company_profile/${id}`)}
               >
                 <StyledTableCell component="th" scope="row">
-                  {`${index + 1}.`}
+                  {`${rowsPerPage*(page)+index+1}.`}
                 </StyledTableCell>
                 <StyledTableCell align="left">{name}</StyledTableCell>
                 <StyledTableCell align="left">{phone}</StyledTableCell>
