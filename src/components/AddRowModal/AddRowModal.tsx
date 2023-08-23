@@ -107,6 +107,9 @@ const AddRowModal = (props: any) => {
       <Box className="modal-body">
         {loader ? (
           <Box className="loader-box">
+            <div>
+            abe
+            </div>
             <CircularProgress color="inherit" />
           </Box>
         ) : (
@@ -204,6 +207,7 @@ const AddRowModal = (props: any) => {
                   variant="outlined"
                   onClick={handleClose}
                   sx={closeButton}
+                  data-testid="close-add-edit-modal"
                 >
                   Close
                 </Button>

@@ -131,6 +131,7 @@ const Dashboard = () => {
                   dispatch(increamentCount(count));
                 }}
                 sx={addButton}
+                title="increment"
               >
                 {`++ ${count}`}
               </Button>
@@ -140,6 +141,8 @@ const Dashboard = () => {
                   dispatch(decreamentCount(count));
                 }}
                 sx={addButton}
+                title="decrement"
+
               >
                 {`-- ${count}`}
               </Button>
@@ -149,7 +152,7 @@ const Dashboard = () => {
               setText={setSearchedText}
               handleSearch={handleSearch}
               textBoxStyle={textBoxStyle}
-              name="search"
+              name="Search"
             />
           </Box>
           <StrippedTable
