@@ -50,20 +50,31 @@ const DeleteRowModal = (props: any) => {
           aria-label="close-icon"
           onClick={handleClose}
           sx={closeIcon}
+          data-testid="close-icon"
         >
           <Close />
         </IconButton>
         <Box className="modal-content-delete">
-          <Box className="content-header-delete">Are you sure you want to delete this row?</Box>
-          <Box className="content-body-delete">Once you delete the row you will not be able to undo it.</Box>
+          <Box className="content-header-delete">
+            Are you sure you want to delete this row?
+          </Box>
+          <Box className="content-body-delete">
+            Once you delete the row you will not be able to undo it.
+          </Box>
           <Box className="modal-footer-delete">
-            <Button variant="outlined" onClick={handleClose} sx={closeButton}>
+            <Button
+              variant="outlined"
+              onClick={handleClose}
+              sx={closeButton}
+              data-testid="close-button"
+            >
               Close
             </Button>
             <Button
               variant="contained"
               onClick={handleDelete}
               sx={deleteButton}
+              title="delete"
             >
               Delete
             </Button>

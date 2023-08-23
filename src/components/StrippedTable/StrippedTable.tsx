@@ -136,7 +136,7 @@ export default function StrippedTable(props: any) {
     setRowId(id);
     setOpenDeleteModal(true);
   };
-
+console.log(rows.length,"rows")
   return (
     <TableContainer component={Paper} sx={{ marginTop: "25px" }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -151,7 +151,7 @@ export default function StrippedTable(props: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {(rowsPerPage > 0
+          {(rowsPerPage > 0 && rows.length>=5
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row: any, index: number) => {
@@ -175,6 +175,7 @@ export default function StrippedTable(props: any) {
                       onClick={(event: React.MouseEvent) =>
                         handleEdit(event, id)
                       }
+                      data-testid="edit-button"
                     >
                       <Edit />
                     </IconButton>
@@ -183,6 +184,7 @@ export default function StrippedTable(props: any) {
                       onClick={(event: React.MouseEvent) =>
                         handleDelete(event, id)
                       }
+                      data-testid="delete-button"
                     >
                       <Delete />
                     </IconButton>

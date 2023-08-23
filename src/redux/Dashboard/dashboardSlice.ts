@@ -13,7 +13,12 @@ const dashboardSlice = createSlice({
   reducers: {
     //action parameter consist of payload:void and type:string
     getCompanyList: (state, action: PayloadAction<any>) => {
-      state.companyList = [...action.payload];
+      if (Array.isArray(action.payload)) {
+        state.companyList = [...action.payload];
+      }
+      else{
+        state.companyList =action.payload;
+      }
     },
     // decreamentCount: (state, action: PayloadAction<number>) => {
     //   state.count = action.payload - 1;
@@ -22,6 +27,6 @@ const dashboardSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { getCompanyList } = dashboardSlice.actions
+export const { getCompanyList } = dashboardSlice.actions;
 
-export default dashboardSlice.reducer
+export default dashboardSlice.reducer;
