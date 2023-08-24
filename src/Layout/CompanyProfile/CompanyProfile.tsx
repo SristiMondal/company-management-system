@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Backdrop, CircularProgress } from "@mui/material";
-import { fetchCompanyData } from "../../utils/data";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "./CompanyProfile.css";
+import { RootState } from "../../redux/store";
+import { fetchCompanyData } from "../../utils/data";
+import { getCompanyList } from "../../redux/Dashboard/dashboardSlice";
 
 const title = {
   fontSize: "14px",
@@ -22,21 +25,31 @@ const description = {
 
 const CompanyProfile = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const companies = useSelector(
+    (state: RootState) => state.company.companyList
+  );
   const [profileData, setProfileData] = useState<any>({});
   const [loader, setLoader] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const companies:any = await fetchCompanyData();
-      if (companies) {
-        setLoader(false);
-        let filteredData = companies.filter((row: any) => row.id == 1);
-        setProfileData(filteredData[0]);
+      const companiesData: any = await fetchCompanyData();
+      if (companiesData) {
+        dispatch(getCompanyList(companiesData.data));
       }
+      setLoader(false);
     };
     fetchData();
   }, []);
-  
+
+  useEffect(() => {
+    if (companies) {
+      let filteredData = companies?.filter((row: any) => row.id == 1);
+      setProfileData(filteredData.length ? filteredData[0] : []);
+    }
+  }, [companies]);
+
   return (
     <Box>
       {loader ? (
@@ -96,7 +109,12 @@ const CompanyProfile = () => {
                 <Typography variant="body1" color="initial" sx={title}>
                   Contact:
                 </Typography>
-                <Typography variant="body1" color="initial" sx={description} data-testid="test-phone">
+                <Typography
+                  variant="body1"
+                  color="initial"
+                  sx={description}
+                  data-testid="test-phone"
+                >
                   {profileData?.phone ?? ""}
                 </Typography>
               </Box>

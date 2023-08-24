@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Backdrop, CircularProgress, Button } from "@mui/material";
+import {
+  Box,
+  Backdrop,
+  CircularProgress,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import StrippedTable from "../../components/StrippedTable/StrippedTable";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import "./Dashboard.css";
@@ -12,7 +19,10 @@ import counterSlice, {
 } from "../../redux/counterSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { getCompanyList } from "../../redux/Dashboard/dashboardSlice";
+import {
+  deleteCompanyRow,
+  getCompanyList,
+} from "../../redux/Dashboard/dashboardSlice";
 
 const textBoxStyle = {
   width: "300px",
@@ -33,9 +43,11 @@ const Dashboard = () => {
   const [searchedText, setSearchedText] = useState<string>("");
   const [rows, setRows] = useState<any>([]);
   const [loader, setLoader] = useState<boolean>(true);
+  const [apiLoader, setApiLoader] = useState<boolean>(false);
   const [modalLoadar, setModalLoader] = useState<boolean>(false);
   const [openAddModal, setOpenAddModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [opensnackbar, setOpenSnackbar] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [rowId, setRowId] = useState<number>(-1);
   const count = useSelector((state: RootState) => state.counter.count);
@@ -66,7 +78,9 @@ const Dashboard = () => {
   };
 
   const handleDelete = () => {
-    console.log(rowId, "deleted");
+    setApiLoader(true);
+    dispatch(deleteCompanyRow(rowId));
+    handleCloseModal();
   };
 
   const handleCloseModal = () => {
@@ -96,8 +110,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     setRows(companies ?? []);
+    setApiLoader(false);
   }, [companies]);
-  console.log(count, "count");
+
   return (
     <Box>
       {loader ? (
@@ -142,7 +157,6 @@ const Dashboard = () => {
                 }}
                 sx={addButton}
                 title="decrement"
-
               >
                 {`-- ${count}`}
               </Button>
@@ -172,6 +186,7 @@ const Dashboard = () => {
           id={rowId}
           setLoader={setModalLoader}
           loader={modalLoadar}
+          setOpenSnackbar={setOpenSnackbar}
         />
       ) : null}
       {openDeleteModal ? (
@@ -181,6 +196,24 @@ const Dashboard = () => {
           handleDelete={handleDelete}
         />
       ) : null}
+      <Snackbar
+        open={opensnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        autoHideDuration={6000}
+        onClose={() => {
+          setOpenSnackbar(false);
+        }}
+      >
+        <Alert
+          onClose={() => {
+            setOpenSnackbar(false);
+          }}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          There is an error!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

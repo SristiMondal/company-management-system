@@ -215,7 +215,18 @@ describe("Company Profile Module", () => {
     const closeDeleteModalButton = await screen.findByTestId("close-button"); //close button in delete modal
     fireEvent.click(closeDeleteModalButton);
   });
-  test("fire event for open edit modal", async () => {
+  test("fire event for open add row modal", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Dashboard />
+        </Provider>
+      </BrowserRouter>
+    );
+    const addRowsButtonElement = await screen.findByText("Add Rows");
+    fireEvent.click(addRowsButtonElement);
+  });
+  test("fire event for open edit row modal", async () => {
     render(
       <BrowserRouter>
         <Provider store={store}>
@@ -225,6 +236,26 @@ describe("Company Profile Module", () => {
     );
     const editButtonStripeElement = await screen.findAllByTestId("edit-button");
     fireEvent.click(editButtonStripeElement[0]);
+  });
+  test("fire event for close button in add modal", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Dashboard />
+        </Provider>
+      </BrowserRouter>
+    );
+    const addRowsButtonElement = await screen.findByText("Add Rows");
+    fireEvent.click(addRowsButtonElement);
+    await waitFor(
+      async () => {
+        const closeButtonAddModal = await screen.findByTestId(
+          "close-add-edit-modal"
+        );
+        fireEvent.click(closeButtonAddModal);
+      },
+      { timeout: 2000 }
+    );
   });
   test("fire event for close button in edit modal", async () => {
     render(
@@ -246,6 +277,84 @@ describe("Company Profile Module", () => {
       { timeout: 2000 }
     );
   });
+  test("fire event for close icon in add modal", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Dashboard />
+        </Provider>
+      </BrowserRouter>
+    );
+    const addRowsButtonElement = await screen.findByText("Add Rows");
+    fireEvent.click(addRowsButtonElement);
+    await waitFor(
+      async () => {
+        const closeIconAddModal = await screen.findByTestId(
+          "add-edit-icon"
+        );
+        fireEvent.click(closeIconAddModal);
+      },
+      { timeout: 2000 }
+    );
+  });
+  test("fire event for close icon in edit modal", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Dashboard />
+        </Provider>
+      </BrowserRouter>
+    );
+    const editButtonStripeElement = await screen.findAllByTestId("edit-button");
+    fireEvent.click(editButtonStripeElement[0]);
+    await waitFor(
+      async () => {
+        const closeIconEditModal = await screen.findByTestId(
+          "add-edit-icon"
+        );
+        fireEvent.click(closeIconEditModal);
+      },
+      { timeout: 2000 }
+    );
+  });
+  test("fire event for save button in add modal", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Dashboard />
+        </Provider>
+      </BrowserRouter>
+    );
+    const addRowsButtonElement = await screen.findByText("Add Rows");
+    fireEvent.click(addRowsButtonElement);
+    await waitFor(
+      async () => {
+        const saveButtonAddModal = await screen.findByText(
+          "Save"
+        );
+        fireEvent.click(saveButtonAddModal);
+      },
+      { timeout: 2000 }
+    );
+  });
+  test("fire event for save button in edit modal", async () => {
+    render(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Dashboard />
+        </Provider>
+      </BrowserRouter>
+    );
+    const editButtonStripeElement = await screen.findAllByTestId("edit-button");
+    fireEvent.click(editButtonStripeElement[0]);
+    await waitFor(
+      async () => {
+        const saveButtonEditModal = await screen.findByText(
+          "Save"
+        );
+        fireEvent.click(saveButtonEditModal);
+      },
+      { timeout: 2000 }
+    );
+  });
 });
-
-
