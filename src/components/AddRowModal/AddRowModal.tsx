@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { fetchCompanyData } from "../../utils/data";
+import { addCompanyRow, editCompanyRow } from "../../redux/Dashboard/dashboardSlice";
+import {useDispatch } from "react-redux";
 
 const closeIcon = {
   position: "absolute",
@@ -56,7 +58,15 @@ const saveButton = {
 };
 
 const AddRowModal = (props: any) => {
-  const { open, handleClose, IsEditMode, id, setLoader, loader } = props;
+  const {
+    open,
+    handleClose,
+    IsEditMode,
+    id,
+    setLoader,
+    loader,
+    setOpenSnackbar,
+  } = props;
   const [formDetails, setFormDetails] = useState<any>({
     name: "",
     phone: "",
@@ -64,23 +74,28 @@ const AddRowModal = (props: any) => {
     vat: "",
     website: "",
   });
+  const dispatch=useDispatch()
 
   const handleSubmit = () => {
-    console.log(formDetails, "formDetails");
+    const { name, phone, email, vat, website } = formDetails;
+    if (!name || !phone || !email || !vat || !website) {
+      setOpenSnackbar(true);
+      return;
+    }
+    if (!IsEditMode) {
+      dispatch(addCompanyRow(formDetails))
+    }
+    else{
+      dispatch(editCompanyRow({id, formDetails}))
+    }
     handleClose();
   };
-
-  useEffect(() => {
-    if (IsEditMode) {
-    }
-  }, [IsEditMode]);
 
   useEffect(() => {
     if (IsEditMode && id !== -1) {
       (async () => {
         let companies = await fetchCompanyData();
         let filteredRows = companies.filter((row: any) => row.id === id);
-        console.log(id, filteredRows);
         setFormDetails({
           name: filteredRows[0]?.name,
           phone: filteredRows[0]?.phone,
@@ -89,7 +104,6 @@ const AddRowModal = (props: any) => {
           website: filteredRows[0]?.website,
         });
       })();
-
     }
     setTimeout(() => {
       setLoader(false);
@@ -107,9 +121,6 @@ const AddRowModal = (props: any) => {
       <Box className="modal-body">
         {loader ? (
           <Box className="loader-box">
-            <div>
-            abe
-            </div>
             <CircularProgress color="inherit" />
           </Box>
         ) : (
@@ -118,6 +129,7 @@ const AddRowModal = (props: any) => {
               aria-label="close-icon"
               onClick={handleClose}
               sx={closeIcon}
+              data-testid="add-edit-icon"
             >
               <Close />
             </IconButton>

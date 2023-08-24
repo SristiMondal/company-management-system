@@ -2,14 +2,15 @@ import React from "react";
 import Header from "../components/Header/Header";
 import Content from "../components/Content/Content";
 import Footer from "../components/Footer/Footer";
+import { Box } from "@mui/material";
 
-const Layout = () => {
+const Layout = ({children}:any) => {
   return (
-    <div>
+    <Box>
       <Header />
-      <Content />
+      <Content>{children}</Content>
       <Footer />
-    </div>
+    </Box>
   );
 };
 

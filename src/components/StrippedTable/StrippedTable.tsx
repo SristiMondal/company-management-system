@@ -136,7 +136,7 @@ export default function StrippedTable(props: any) {
     setRowId(id);
     setOpenDeleteModal(true);
   };
-console.log(rows.length,"rows")
+
   return (
     <TableContainer component={Paper} sx={{ marginTop: "25px" }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
