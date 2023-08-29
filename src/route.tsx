@@ -7,10 +7,6 @@ const CompanyProfile = React.lazy(
 
 const routes = [
   {
-    path: "/", // Root path
-    element: <Navigate to="/dashboard" />,
-  },
-  {
     path: "/dashboard",
     element: <Dashboard />,
   },

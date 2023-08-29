@@ -13,10 +13,7 @@ import "./Dashboard.css";
 import { fetchCompanyData } from "../../utils/data";
 import AddRowModal from "../../components/AddRowModal/AddRowModal";
 import DeleteRowModal from "../../components/DeleteRowModal/DeleteRowModal";
-import counterSlice, {
-  decreamentCount,
-  increamentCount,
-} from "../../redux/counterSlice";
+import { decreamentCount, increamentCount } from "../../redux/counterSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import {

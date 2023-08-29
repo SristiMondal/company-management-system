@@ -14,10 +14,10 @@ const authSlice = createSlice({
     setAuthentication: (state, action: PayloadAction<boolean>) => {
       state.authenticated = action.payload;
     },
-  }
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { setAuthentication } = authSlice.actions
+export const { setAuthentication } = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;
