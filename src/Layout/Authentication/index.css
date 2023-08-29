@@ -8,7 +8,7 @@
 
 .signin-card {
   width: 500px;
-  height: 400px;
+  height: 415px;
   background-color: #000000;
   border-radius: 10px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
@@ -20,4 +20,38 @@
   flex-direction: column;
   margin: 50px 25px;
   gap: 35px;
+}
+
+.link-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 370px;
+  align-self: center;
+}
+
+.register-card {
+  width: 500px;
+  height: fit-content;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.term-condition {
+  display: flex;
+}
+
+.register-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 25px;
+  gap: 15px;
+}
+
+.register-footer {
+  width: 365px;
+  display: flex;
+  gap: 20px;
 }
